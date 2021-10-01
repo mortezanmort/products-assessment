@@ -2,6 +2,13 @@
 
 This app demonstrates Rails 7 with PostgreSQL, import maps, turbo, stimulus and hotwire, all running in Docker.
 
+## Features
+
+* Rails 7 alpha
+* Dockerfile and Docker Compose configuration
+* PostgreSQL database
+* Redis
+
 ## Initial setup
 ```
 docker compose build
