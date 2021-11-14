@@ -16,6 +16,7 @@ This app demonstrates Rails 7 with PostgreSQL, import maps, turbo, stimulus and 
 
 ## Initial setup
 ```
+cp .env.example .env
 docker compose build
 docker compose run --rm web bin/rails db:setup
 ```
