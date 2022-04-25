@@ -49,6 +49,12 @@ docker compose run --rm web bundle update
 docker compose up --build
 ```
 
+## Production build
+
+```
+docker build -f production.Dockerfile .
+```
+
 ## Credits/References
 
 ### Rails with Docker
