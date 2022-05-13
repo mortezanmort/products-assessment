@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_185503) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +52,22 @@ ActiveRecord::Schema.define(version: 2021_12_16_185503) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "name"
+    t.string "address1", limit: 250, default: "", null: false
+    t.string "address2", limit: 250
+    t.string "city", default: "", null: false
+    t.string "state", default: "", null: false
+    t.string "country", default: "", null: false
+    t.string "email"
+    t.string "phone"
+    t.integer "address_type", default: 0
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_addresses_on_order_id"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -68,7 +83,85 @@ ActiveRecord::Schema.define(version: 2021_12_16_185503) do
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "description"
+    t.string "product_code"
+    t.string "customer_product_code"
+    t.string "image_remote_url"
+    t.string "location"
+    t.integer "line_number", default: 0
+    t.integer "quantity", default: 0, null: false
+    t.integer "placement", default: 0
+    t.jsonb "item_properties"
+    t.text "designs", default: [], array: true
+    t.datetime "vendor_updated_at"
+    t.datetime "netsuite_updated_at"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_line_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "sales_order_number", default: "", null: false
+    t.string "vendor_purchase_order_number", default: "", null: false
+    t.string "shipping_method"
+    t.string "shipping_account_number"
+    t.string "shipping_details"
+    t.integer "vendor", default: 0
+    t.integer "status", default: 0
+    t.boolean "test_order", default: false
+    t.text "notes", default: [], array: true
+    t.datetime "netsuite_updated_at"
+    t.datetime "vendor_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "packing_lists", force: :cascade do |t|
+    t.string "url"
+    t.integer "packing_list_type", default: 0
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_packing_lists_on_order_id"
+  end
+
+  create_table "shipping_labels", force: :cascade do |t|
+    t.string "url"
+    t.jsonb "shipping_label_attributes"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shipping_labels_on_order_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "username", default: "", null: false
+    t.string "password", default: "", null: false
+    t.string "email", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "orders"
   add_foreign_key "comments", "articles"
+  add_foreign_key "line_items", "orders"
+  add_foreign_key "packing_lists", "orders"
+  add_foreign_key "shipping_labels", "orders"
 end
