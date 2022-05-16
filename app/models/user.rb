@@ -1,7 +1,10 @@
 class User < ApplicationRecord
-  validates :first_name, :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true, length: { minimum: 8, message: 'Password must be at least 8 characters' }
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email must match format email@domain.com' },
-    uniqueness: { message: 'An account with this email already exists'}
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 end
