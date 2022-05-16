@@ -1,8 +1,27 @@
 # frozen_string_literal: true
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+
+puts 'Beginning seed'
+
+5.times do |i|
+  User.create(first_name: 'Test', last_name: "Admin+#{i + 1}", username: "testadmin+#{i + 1}", email: "testadmin+#{i + 1}@test.com", password: 'Test123$')
+end
+puts 'Users created'
+
+5.times do
+  order = Order.create(sales_order_number: Faker::Alphanumeric.alphanumeric(number: 6), vendor_purchase_order_number: Faker::Alphanumeric.alphanumeric(number: 6))
+
+  5.times do
+    order.line_items.create(name: Faker::Commerce.product_name, quantity: rand(1..10))
+  end
+
+  5.times do
+    order.addresses.create(email: Faker::Internet.email, address1: Faker::Address.full_address, city: Faker::Address.city, state: Faker::Address.state, country: Faker::Address.country)
+  end
+
+  order.create_packing_list(url: Faker::Internet.url)
+
+  order.create_shipping_label(url: Faker::Internet.url)
+end
+puts 'Orders created'
+
+puts 'Seed completed'
