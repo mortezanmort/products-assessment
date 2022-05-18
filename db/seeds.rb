@@ -18,9 +18,9 @@ puts 'Users created'
     order.addresses.create(email: Faker::Internet.email, address1: Faker::Address.full_address, city: Faker::Address.city, state: Faker::Address.state, country: Faker::Address.country)
   end
 
-  order.create_packing_list(url: Faker::Internet.url)
+  order.packing_lists.create(url: Faker::Internet.url)
 
-  order.create_shipping_label(url: Faker::Internet.url)
+  order.shipping_labels.create(url: Faker::Internet.url)
 end
 puts 'Orders created'
 
