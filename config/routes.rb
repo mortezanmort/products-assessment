@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   end
 
   root 'welcome#index'
+
+  # Custom routes for ActiveAdmin
+  get '/submit_order/:id', to: 'admin/orders#submit_order', as: :submit_order
 end

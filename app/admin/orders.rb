@@ -21,6 +21,13 @@ ActiveAdmin.register Order do
     end
   end
 
+  show do
+    default_main_content
+    panel 'LINKS' do
+      link_to 'Submit To MWW', submit_order_path(order)
+    end
+  end
+
   sidebar 'Orders', only: [:show, :edit] do
     ul do
       li link_to 'Line Items',    admin_order_line_items_path(resource)
@@ -34,11 +41,28 @@ ActiveAdmin.register Order do
     def create
       order = Order.new(permitted_params[:order])
       order.notes = permitted_params.dig(:order, :notes)&.split
+
       if order.save
         redirect_to admin_order_path(order), notice: 'Order created successfully'
       else
         redirect_to new_admin_order_path, alert: order.errors
       end
+    end
+
+    def submit_order
+      submission_details = MWWService::SubmitOrder.call(order)
+
+      if submission_details[:status]
+        redirect_to admin_order_path(order), notice: submission_details[:message]
+      else
+        redirect_to admin_order_path(order), alert: submission_details[:message]
+      end
+    end
+
+    private
+
+    def order
+      @_order ||= Order.find(params[:id])
     end
   end
 end

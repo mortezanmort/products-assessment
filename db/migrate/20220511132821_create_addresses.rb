@@ -9,6 +9,7 @@ class CreateAddresses < ActiveRecord::Migration[7.0]
       t.string :country, default: '', null: false
       t.string :email
       t.string :phone
+      t.string :postal_code
       t.integer :address_type, default: 0
       t.references :order, foreign_key: true, index: true
 

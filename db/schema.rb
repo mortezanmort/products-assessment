@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
     t.string "country", default: "", null: false
     t.string "email"
     t.string "phone"
+    t.string "postal_code"
     t.integer "address_type", default: 0
     t.bigint "order_id"
     t.datetime "created_at", null: false
@@ -108,11 +109,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
     t.string "vendor_purchase_order_number", default: "", null: false
     t.string "shipping_method"
     t.string "shipping_account_number"
-    t.string "shipping_details"
+    t.string "test_order", default: "test", null: false
     t.integer "vendor", default: 0
     t.integer "status", default: 0
-    t.boolean "test_order", default: false
     t.text "notes", default: [], array: true
+    t.jsonb "shipping_details"
     t.datetime "netsuite_updated_at"
     t.datetime "vendor_updated_at"
     t.datetime "created_at", null: false

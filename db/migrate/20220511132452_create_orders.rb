@@ -5,11 +5,11 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.string :vendor_purchase_order_number, default: '', null: false
       t.string :shipping_method
       t.string :shipping_account_number
-      t.string :shipping_details
+      t.string :test_order, default: 'test', null: false
       t.integer :vendor, default: 0
       t.integer :status, default: 0
-      t.boolean :test_order, default: false
       t.text :notes, array: true, default: []
+      t.jsonb :shipping_details
       t.datetime :netsuite_updated_at
       t.datetime :vendor_updated_at
 
