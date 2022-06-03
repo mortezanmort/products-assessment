@@ -9,4 +9,5 @@ class Order < ApplicationRecord
   validates :sales_order_number, :vendor_purchase_order_number, presence: true
 
   enum vendor: { mww: 0 }
+  enum status: { pending: 0, submitted: 1, approved: 2, cancelled: 3 }
 end

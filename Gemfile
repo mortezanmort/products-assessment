@@ -63,6 +63,10 @@ gem 'faker'
 # Authentication
 gem "devise", "~> 4.8"
 
+# Sidekiq
+gem "sidekiq"
+gem "sidekiq-cron"
+
 # countries list dropdown
 gem "country-select"
 
