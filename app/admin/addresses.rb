@@ -2,7 +2,7 @@ ActiveAdmin.register Address do
   belongs_to :order
   navigation_menu :order
 
-  permit_params :name, :address1, :address2, :city, :state, :country, :email, :phone, :address_type, :order_id
+  permit_params :name, :address1, :address2, :city, :state, :country, :email, :phone, :address_type, :order_id, :postal_code
 
   remove_filter :order
 
@@ -14,6 +14,7 @@ ActiveAdmin.register Address do
       input :city
       input :state
       input :country
+      input :postal_code
       input :email
       input :phone
       input :address_type

@@ -54,11 +54,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "name"
-    t.string "address1", limit: 250, default: "", null: false
-    t.string "address2", limit: 250
-    t.string "city", default: "", null: false
-    t.string "state", default: "", null: false
-    t.string "country", default: "", null: false
+    t.string "address1", default: ""
+    t.string "address2"
+    t.string "city", default: ""
+    t.string "state", default: ""
+    t.string "country", default: ""
     t.string "email"
     t.string "phone"
     t.string "postal_code"
@@ -105,12 +105,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "sales_order_number", default: "", null: false
+    t.string "sales_order_number"
     t.string "vendor_purchase_order_number", default: "", null: false
     t.string "shipping_method"
     t.string "shipping_account_number"
     t.string "test_order", default: "test", null: false
-    t.integer "vendor", default: 0
+    t.string "vendor", default: ""
     t.integer "status", default: 0
     t.text "notes", default: [], array: true
     t.jsonb "shipping_details"

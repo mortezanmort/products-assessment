@@ -1,7 +1,11 @@
 ActiveAdmin.register Order do
-  permit_params :sales_order_number, :vendor_purchase_order_number, :shipping_method, :shipping_account_number, :shipping_details, :vendor, :status, :test_order, :notes, :netsuite_updated_at, :vendor_updated_at
+  permit_params :sales_order_number, :vendor_purchase_order_number, :shipping_method, :shipping_account_number, :vendor, :status, :test_order, :notes, :netsuite_updated_at, :vendor_updated_at
 
   remove_filter :packing_lists, :shipping_labels, :addresses, :versions, :line_items
+
+  action_item only: :index do
+    link_to 'Fetch NetSuite Orders', fetch_netsuite_orders_path
+  end
 
   form do |f|
     inputs do
@@ -9,7 +13,6 @@ ActiveAdmin.register Order do
       input :vendor_purchase_order_number
       input :shipping_method
       input :shipping_account_number
-      input :shipping_details
       input :vendor
       input :status
       input :test_order
@@ -23,8 +26,18 @@ ActiveAdmin.register Order do
 
   show do
     default_main_content
-    panel 'LINKS' do
-      link_to 'Submit To MWW', submit_order_path(order)
+    div do
+      if order.pending?
+        link_to 'Approve', approve_order_path(order)
+      elsif order.approved?
+          if !order.submitted?
+            link_to 'Submit To MWW', submit_order_path(order)
+          else
+            div do
+              'Submitted'
+            end
+          end
+      end
     end
   end
 
@@ -52,10 +65,18 @@ ActiveAdmin.register Order do
     def submit_order
       submission_details = MWWService::SubmitOrder.call(order)
 
-      if submission_details[:status]
+      if submission_details[:status] && order.submitted!
         redirect_to admin_order_path(order), notice: submission_details[:message]
       else
         redirect_to admin_order_path(order), alert: submission_details[:message]
+      end
+    end
+
+    def approve_order
+      if order.pending? && order.approved!
+        redirect_to admin_order_path(order), notice: 'Approved successfully'
+      else
+        redirect_to admin_order_path(order), alert: 'Something went wrong'
       end
     end
 

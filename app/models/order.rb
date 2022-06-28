@@ -6,8 +6,15 @@ class Order < ApplicationRecord
 
   has_paper_trail
 
-  validates :sales_order_number, :vendor_purchase_order_number, presence: true
+  validates :vendor_purchase_order_number, presence: true
 
-  enum vendor: { mww: 0 }
-  enum status: { pending: 0, submitted: 1, approved: 2, cancelled: 3 }
+  enum status: { pending: 0, completed: 1, approved: 2, rejected: 3 , submitted: 4}
+
+  def billing_address
+    addresses.find_by(address_type: :billing_address)
+  end
+
+  def shipping_address
+    addresses.find_by(address_type: :shipping_address)
+  end
 end

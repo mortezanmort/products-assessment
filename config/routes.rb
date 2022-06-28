@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  get '/fetch_netsuite_orders', to: 'welcome#fetch_netsuite_orders'
+
   # Custom routes for ActiveAdmin
   get '/submit_order/:id', to: 'admin/orders#submit_order', as: :submit_order
+  get '/approve_order/:id', to: 'admin/orders#approve_order', as: :approve_order
 end
