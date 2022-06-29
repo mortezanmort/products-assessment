@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  root 'welcome#index'
+  root 'admin/orders#index'
 
   get '/fetch_netsuite_orders', to: 'welcome#fetch_netsuite_orders'
 

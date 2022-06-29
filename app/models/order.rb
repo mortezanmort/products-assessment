@@ -8,7 +8,9 @@ class Order < ApplicationRecord
 
   validates :vendor_purchase_order_number, presence: true
 
-  enum status: { pending: 0, completed: 1, approved: 2, rejected: 3 , submitted: 4}
+  enum status: { pending: 0, completed: 1, approved: 2, cancelled: 3, submitted: 4}
+
+  scope :vendor_approved_orders, -> (vendor) { where(vendor: vendor).approved }
 
   def billing_address
     addresses.find_by(address_type: :billing_address)

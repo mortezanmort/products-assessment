@@ -29,14 +29,14 @@ ActiveAdmin.register Order do
     div do
       if order.pending?
         link_to 'Approve', approve_order_path(order)
-      elsif order.approved?
-          if !order.submitted?
-            link_to 'Submit To MWW', submit_order_path(order)
-          else
-            div do
-              'Submitted'
-            end
+      else
+        if order.submitted?
+          div do
+            'Submitted'
           end
+        elsif order.vendor == '395 MWW On Demand'
+          link_to 'Submit To MWW', submit_order_path(order)
+        end
       end
     end
   end
