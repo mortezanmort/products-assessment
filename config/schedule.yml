@@ -1,7 +1,7 @@
 submit_order:
-  cron: "0 */2 * * *"
+  cron: "0 */12 * * *"
   class: "SubmitOrderWorker"
 
 receive_order:
-  cron: "0 */2 * * *"
+  cron: "0 */12 * * *"
   class: "ReceiveOrderWorker"
