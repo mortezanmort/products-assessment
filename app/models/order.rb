@@ -8,7 +8,7 @@ class Order < ApplicationRecord
 
   validates :vendor_purchase_order_number, presence: true
 
-  enum status: { pending: 0, completed: 1, approved: 2, cancelled: 3, submitted: 4}
+  enum status: { pending: 0, completed: 1, approved: 2, cancelled: 3, submitted: 4 }
 
   scope :vendor_approved_orders, -> (vendor) { where(vendor: vendor).approved }
 
@@ -18,5 +18,9 @@ class Order < ApplicationRecord
 
   def shipping_address
     addresses.find_by(address_type: :shipping_address)
+  end
+
+  def send_error_email
+    OrdersMailer.with(order: self).send_error_message.deliver_later
   end
 end

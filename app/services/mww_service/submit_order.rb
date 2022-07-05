@@ -16,7 +16,7 @@ module MWWService
       response = http.request(request)
       return { status: true, message: "Successfully submitted" } if response.code == '201'
 
-      { status: false, message: parse_errors(response) }
+      { status: false, message: parse_errors_and_send_mail(response) }
     end
 
     private
@@ -36,12 +36,16 @@ module MWWService
       req
     end
 
-    def parse_errors(response)
+    def parse_errors_and_send_mail(response)
       return "You made a bad request" if response.blank?
 
-      JSON.parse(response.body)['errors'].map do |error|
+      errors = JSON.parse(response.body)['errors'].map do |error|
         "Error code: #{error['code']}, #{error['title']} Details: #{error['detail']}"
       end.join(". ")
+      order.update(submission_errors: errors)
+      order.send_error_email
+
+      errors
     end
   end
 end

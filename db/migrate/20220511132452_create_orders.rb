@@ -7,6 +7,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.string :shipping_account_number
       t.string :test_order, default: 'test', null: false
       t.string :vendor, default: ''
+      t.string :submission_errors, default: ''
       t.integer :status, default: 0
       t.text :notes, array: true, default: []
       t.jsonb :shipping_details

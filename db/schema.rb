@@ -111,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
     t.string "shipping_account_number"
     t.string "test_order", default: "test", null: false
     t.string "vendor", default: ""
+    t.string "submission_errors", default: ""
     t.integer "status", default: 0
     t.text "notes", default: [], array: true
     t.jsonb "shipping_details"
