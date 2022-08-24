@@ -65,7 +65,7 @@ ActiveAdmin.register Order do
     def submit_order
       submission_details = MWWService::SubmitOrder.call(order)
 
-      if submission_details[:status] && order.submitted!
+      if submission_details[:status] && order.update(status: :submitted, submission_errors: nil)
         redirect_to admin_order_path(order), notice: submission_details[:message]
       else
         redirect_to admin_order_path(order), alert: submission_details[:message]

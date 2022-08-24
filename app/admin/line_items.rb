@@ -6,6 +6,25 @@ ActiveAdmin.register LineItem do
 
   remove_filter :order
 
+  index do
+    instance_eval(&default_table)
+    column 'Images' do |line_item|
+      ("<a href=#{line_item.image_remote_url}>open image</a>").html_safe if line_item.image_remote_url.present?
+    end
+  end
+
+  show do
+    default_main_content
+
+    attributes_table do
+      row :image do |line_item|
+        if line_item.image_remote_url.present?
+          image_tag line_item.image_remote_url, class: 'img'
+        end
+      end
+    end
+  end
+
   form do |f|
     inputs do
       input :name

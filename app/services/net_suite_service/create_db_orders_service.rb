@@ -116,7 +116,8 @@ module NetSuiteService
         quantity: item.dig("attributes", "quantity"),
         product_code: item.dig("attributes", "vendor_name"),
         customer_product_code: item.dig("attributes", "vendor_name"),
-        netsuite_updated_at: Time.current
+        netsuite_updated_at: Time.current,
+        image_remote_url: fetch_url(item)
       )
     end
 
@@ -153,6 +154,14 @@ module NetSuiteService
 
     def order_changed?(purchase_order)
       purchase_order.last_modified_date > order.netsuite_updated_at
+    end
+
+    def fetch_url(item)
+      url = nil
+      item.dig('attributes', 'custom_field_list', 'custom_fields').each do |script|
+        url = script['attributes']['value'] if script['script_id'] == 'custcol_bb_art_link'
+      end
+      url
     end
   end
 end

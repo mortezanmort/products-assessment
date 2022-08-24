@@ -59,7 +59,11 @@ module MWWService
             'product-code': line_item.product_code,
             'customer-product-code': line_item.customer_product_code,
             'item-properties': line_item.item_properties,
-            'designs': line_item.designs
+            'designs': [
+              {
+                'image-remote-url': line_item.image_remote_url
+              }
+            ]
           }
         }
       end
