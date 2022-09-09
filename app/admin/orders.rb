@@ -1,7 +1,10 @@
 ActiveAdmin.register Order do
   permit_params :sales_order_number, :vendor_purchase_order_number, :shipping_method, :shipping_account_number, :vendor, :status, :test_order, :notes, :netsuite_updated_at, :vendor_updated_at
 
-  remove_filter :packing_lists, :shipping_labels, :addresses, :versions, :line_items
+  remove_filter :packing_lists, :shipping_labels, :addresses, :versions, :line_items, :created_at, :updated_at, :submission_errors, :notes, :status
+  preserve_default_filters!
+  filter :status_eq, as: :select, collection: Order.statuses, label: 'Status'
+  filter :vendor_eq, as: :select, collection: ['395 MWW On Demand'], label: 'Vendor'
 
   action_item only: :index do
     link_to 'Fetch NetSuite Orders', fetch_netsuite_orders_path

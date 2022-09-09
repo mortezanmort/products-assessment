@@ -4,7 +4,7 @@ ActiveAdmin.register LineItem do
 
   permit_params :name, :description, :product_code, :customer_product_code, :image_remote_url, :location, :line_number, :quantity, :placement, :item_properties, :designs, :vendor_updated_at, :netsuite_updated_at, :order_id
 
-  remove_filter :order
+  remove_filter :order, :created_at, :updated_at, :designs, :image_remote_url, :description, :vendor_updated_at, :netsuite_updated_at
 
   index do
     instance_eval(&default_table)

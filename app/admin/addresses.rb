@@ -2,9 +2,11 @@ ActiveAdmin.register Address do
   belongs_to :order
   navigation_menu :order
 
-  permit_params :name, :address1, :address2, :city, :state, :country, :email, :phone, :address_type, :order_id, :postal_code
+  permit_params :name, :address1, :address2, :city, :state, :country, :email, :phone, :address_type, :order_id, :postal_code, :address_type
 
-  remove_filter :order
+  preserve_default_filters!
+  remove_filter :order, :created_at, :updated_at, :address1, :address2
+  filter :address_type_eq, as: :select, collection: Address.address_types, label: 'Type'
 
   form do |f|
     inputs do
