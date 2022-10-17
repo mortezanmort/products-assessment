@@ -6,6 +6,29 @@ ActiveAdmin.register Order do
   filter :status_eq, as: :select, collection: Order.statuses, label: 'Status'
   filter :vendor_eq, as: :select, collection: ['395 MWW On Demand'], label: 'Vendor'
 
+  index do
+    selectable_column
+    column :id
+    column :sales_order_number
+    column :vendor_purchase_order_number
+    column :shipping_method
+    column :shipping_account_number
+    column :vendor
+    column 'status' do |order|
+      div class: order.delayed? ? 'bg-red' : '' do
+        order.status
+      end
+    end
+    column :test_order
+    column :notes
+    column :submission_errors
+    column :shipping_details
+    column :netsuite_updated_at
+    column :vendor_updated_at
+    column :created_at
+    column :updated_at
+  end
+
   form do |f|
     inputs do
       input :sales_order_number

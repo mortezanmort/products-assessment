@@ -23,4 +23,8 @@ class Order < ApplicationRecord
   def send_error_email
     OrdersMailer.with(order: self).send_error_message.deliver_later
   end
+
+  def delayed?
+    pending? && Time.current - updated_at > 24.hours.to_f
+  end
 end
