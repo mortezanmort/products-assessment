@@ -15,5 +15,6 @@ Rails.application.routes.draw do
 
   # Custom routes for ActiveAdmin
   get '/submit_order/:id', to: 'admin/orders#submit_order', as: :submit_order
+  get '/update_order_addresses/:id', to: 'admin/addresses#update_order_addresses', as: :update_order_addresses
   get '/approve_order/:id', to: 'admin/orders#approve_order', as: :approve_order
 end

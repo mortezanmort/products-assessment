@@ -14,9 +14,7 @@ puts 'Users created'
     order.line_items.create(name: Faker::Commerce.product_name, line_number: rand(1..1000), quantity: rand(1..10), description: 'It is not so fluffy!', product_code: "PRT-GEN-SHGNPW", customer_product_code: '', item_properties: {thread_color: 'white'}, designs: [image_remote_url: 'https://static.pexels.com/photos/39803/pexels-photo-39803.jpeg'])
   end
 
-  5.times do
-    order.addresses.create(address_type: :billing_address, name: Faker::Commerce.product_name, email: Faker::Internet.email, address1: Faker::Address.full_address, address2: Faker::Address.full_address, city: Faker::Address.city, state: Faker::Address.state, country: Faker::Address.country, postal_code: Faker::Address.postcode, phone: Faker::PhoneNumber.phone_number)
-  end
+  order.addresses.create(address_type: :shipping_address, name: Faker::Commerce.product_name, email: Faker::Internet.email, address1: Faker::Address.full_address, address2: Faker::Address.full_address, city: Faker::Address.city, state: Faker::Address.state, country: Faker::Address.country, postal_code: Faker::Address.postcode, phone: Faker::PhoneNumber.phone_number)
 
   order.packing_lists.create(url: Faker::Internet.url)
 

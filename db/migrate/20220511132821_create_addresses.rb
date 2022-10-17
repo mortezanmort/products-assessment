@@ -10,6 +10,7 @@ class CreateAddresses < ActiveRecord::Migration[7.0]
       t.string :email
       t.string :phone
       t.string :postal_code
+      t.string :updation_errors, default: ''
       t.integer :address_type, default: 0
       t.references :order, foreign_key: true, index: true
 
