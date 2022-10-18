@@ -27,6 +27,7 @@ ActiveAdmin.register Order do
     column :vendor_updated_at
     column :created_at
     column :updated_at
+    actions
   end
 
   form do |f|

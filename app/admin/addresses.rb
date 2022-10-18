@@ -44,10 +44,10 @@ ActiveAdmin.register Address do
     def update_shipping_address(order)
       response = MWWService::UpdateShippingAddress.call(order.shipping_address)
 
-      if response[:status] && order.shipping_address.update(submission_errors: nil)
+      if response[:status] && order.shipping_address.update(updation_errors: nil)
         flash[:notice] = response[:message]
       else
-        order.shipping_address.update(submission_errors: response[:message])
+        order.shipping_address.update(updation_errors: response[:message])
         flash[:alert] = response[:message]
       end
       redirect_to admin_order_addresses_path(order)

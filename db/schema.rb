@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_13_143242) do
     t.string "email"
     t.string "phone"
     t.string "postal_code"
-    t.string "submission_errors", default: ""
+    t.string "updation_errors", default: ""
     t.integer "address_type", default: 0
     t.bigint "order_id"
     t.datetime "created_at", null: false
