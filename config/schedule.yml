@@ -5,3 +5,7 @@ submit_order:
 receive_order:
   cron: "0 */2 * * *"
   class: "ReceiveOrderWorker"
+
+retrieve_order:
+  cron: "0 */2 * * *"
+  class: "RetrieveOrderWorker"
